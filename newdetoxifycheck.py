@@ -33,7 +33,7 @@ def predictsentencetoxicity(texts_col, modelname='unbiased'):
 def calculatetoxicity(df, texts_col, modelname='unbiased'):
     detox_model = Detoxify(modelname)
     df['toxic_result'] = dict(df['text'].apply(lambda t: detox_model.predict(str(t))))
-    df['maxoftwo'] = df['toxic_result'].apply(lambda x: dict(sorted(Counter(x).most_common(2), key=lambda item: item[1], reverse=True))
+    df['maxoftwo'] = df['toxic_result'].apply(lambda x: dict(sorted(Counter(x).most_common(2), key=lambda item: item[1], reverse=True)))
     #df['maxoftwo'] = df['toxic_result'].apply(lambda x: dict(Counter(x).most_common(2)))
     maxoftwo  = df['maxoftwo'][0]
     #df['avgofmaxtwopercentage']= (sum(maxoftwo.values()) / len(maxoftwo) * 100)
