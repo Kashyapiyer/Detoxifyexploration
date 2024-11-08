@@ -27,7 +27,7 @@ def predictsentencetoxicity(texts_col, modelname='unbiased'):
         result['question'] = texts_col
         result['maxoftwo'] = maxoftwo
         result['summationpercenatage'] = summationpercenatage
-        result['avgofmaxtwopercentage'] = avgofmaxtwopercentage
+        #result['avgofmaxtwopercentage'] = avgofmaxtwopercentage
         result['toxicityeval'] = toxicityeval
         return result
 
@@ -40,7 +40,7 @@ def calculatetoxicity(df, texts_col, modelname='unbiased'):
     maxoftwo  = df['maxoftwo'][0]
     #df['avgofmaxtwopercentage']= (sum(maxoftwo.values()) / len(maxoftwo) * 100)
     df['summationpercentage'] = (sum(maxoftwo.values()) * 100)
-    df['avgofmaxtwopercentage'] = ((sum(maxoftwo.values()) / len(maxoftwo)) * 100)
+    #df['avgofmaxtwopercentage'] = ((sum(maxoftwo.values()) / len(maxoftwo)) * 100)
     # changing to summationpercentage
     df['toxicityeval'] = df['summationpercentage'].apply(lambda x: 1 if x > 90 else 0) 
     return df
@@ -54,8 +54,9 @@ def predicttoxicity(df, texts_col, modelname='unbiased'):
       # get two higly toxic 
       maxtwotoxic = dict(Counter(result).most_common(2))
       result['maxtwotoxic'] = maxtwotoxic 
-      result['summationpercentage'] = '{:.2f}%'.format((sum(maxtwotoxic.values()) * 100)) 
-      result['avgofmaxtwopercentage']= '{:.2f}%'.format((sum(maxtwotoxic.values()) / len(maxtwotoxic))* 100)
+      result['summationpercentage'] = '{:.2f}%'.format(sum(maxtwotoxic.values()))
+      #result['avgofmaxtwopercentage']= '{:.2f}%'.format((sum(maxtwotoxic.values()) / len(maxtwotoxic))* 100)
+      result['toxicityeval'] = result['summationpercentage'].apply(lambda x: 1 if x > 90 else 0) 
       responsedict[sentence] = result
       rdf = pd.DataFrame(list(responsedict.items()), columns=['Question', 'Response'])
       flatten_df = pd.json_normalize(rdf.to_dict(orient='records'))
