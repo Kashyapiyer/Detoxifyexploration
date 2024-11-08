@@ -39,7 +39,9 @@ def calculatetoxicity(df, texts_col, modelname='unbiased'):
     #df['maxoftwo'] = df['toxic_result'].apply(lambda x: dict(Counter(x).most_common(2)))
     #maxoftwo  = df['maxoftwo'][0]
     #df['avgofmaxtwopercentage']= (sum(maxoftwo.values()) / len(maxoftwo) * 100)
-    df['summationpercentage'] = (sum(df['maxoftwo'].values()) * 100)
+    df['summationpercentage'] = df['values'].apply(lambda x: (sum(x.values()) * 100))
+    
+    #df['summationpercentage'] = (sum(df['maxoftwo'].values()) * 100)
     #df['avgofmaxtwopercentage'] = ((sum(maxoftwo.values()) / len(maxoftwo)) * 100)
     # changing to summationpercentage
     df['toxicityeval'] = df['summationpercentage'].apply(lambda x: 1 if x > 90 else 0) 
