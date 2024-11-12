@@ -40,8 +40,8 @@ def calculatetoxicity(df, texts_col, modelname='unbiased'):
     #maxoftwo  = df['maxoftwo'][0]
     #df['avgofmaxtwopercentage']= (sum(maxoftwo.values()) / len(maxoftwo) * 100)
     #df['summationpercentage'] = df['maxoftwo'].apply(lambda x: (sum(x.values()) * 100))
-
-    df['summationpercentage'] = (df['maxoftwo'].values).map('{.2%}'.format))
+    # orev
+    df['summationpercentage'] = df['maxoftwo'].apply(lambda x: (sum(x.values()) * 100))
     
     #df['summationpercentage'] = (sum(df['maxoftwo'].values()) * 100)
     #df['avgofmaxtwopercentage'] = ((sum(maxoftwo.values()) / len(maxoftwo)) * 100)
