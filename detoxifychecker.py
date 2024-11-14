@@ -45,7 +45,7 @@ def smallsetrun(df, numbervalue, colname, exportfilepath):
 def calcualte_metrics(df,truecol,predcol,pos_label):
 
     import numpy as np
-    from sklearn.metrics import accuracy_score, precision_score, recall_score, confusion_matrix
+    from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
 
     x_true = df['truecol']
     x_pred = df['predcol']	
@@ -54,10 +54,12 @@ def calcualte_metrics(df,truecol,predcol,pos_label):
 
     accuracy = accuracy_score(x_true, x_pred)
 
-    precision = precision_score(x_true, x_pred, pos_label=pos_label)
+    precision = precision_score(x_true, x_pred)
 
-    recall = recall_score(x_true, x_pred, pos_label=pos_label)
+    recall = recall_score(x_true, x_pred)
+    f1_score_cal = f1_score(x_true, x_pred)
     result['Accuracy'] = {accuracy:.4f}
     result['Recall'] = {recall:.4f}
     result['Precision'] = {precsion:.4f}
+    result['f1_score_cal'] = {f1_score_cal:.4f}
     return result
