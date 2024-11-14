@@ -41,4 +41,23 @@ def smallsetrun(df, numbervalue, colname, exportfilepath):
     end_time = datetime.now()
     duration_in_minutes = (end_time - start_time) / 60
     print(f"Duration in minutes: {duration_in_minutes}")
-    
+
+def calcualte_metrics(df,truecol,predcol,pos_label):
+
+    import numpy as np
+    from sklearn.metrics import accuracy_score, precision_score, recall_score, confusion_matrix
+
+    x_true = df['truecol']
+    x_pred = df['predcol']	
+	
+    result = {}
+
+    accuracy = accuracy_score(x_true, x_pred)
+
+    precision = precision_score(x_true, x_pred, pos_label=pos_label)
+
+    recall = recall_score(x_true, x_pred, pos_label=pos_label)
+    result['Accuracy'] = {accuracy:.4f}
+    result['Recall'] = {recall:.4f}
+    result['Precision'] = {precsion:.4f}
+    return result
