@@ -1,4 +1,4 @@
-Simple exploration with Detoxify 
+Simple exploration with Detoxify using Personal Colab
 
 References:
 * https://github.com/unitaryai/detoxify
