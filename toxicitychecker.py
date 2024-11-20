@@ -20,7 +20,8 @@ def calculatetoxicityratio(df, contextstr,gtlabel='label',modelname='unbiased'):
     detox_model = Detoxify(modelname)
     df['toxicity_result'] = df[contextstr].apply(lambda t: detox_model.predict(t))   
     df['toxicity_percentage'] = df['toxicity_result'].apply(lambda p: {k: round(v * 100, 2) for k, v in p.items()})
-    df['toxicityrisk'] = df['toxicity_percentage'].apply(lambda x: 2 if any(v > 7 for v in x.values()) else 1 if any(0.4 < v < 7 for v in x.values()) else 0)
+    #df['toxicityrisk'] = df['toxicity_percentage'].apply(lambda x: 2 if any(v > 7 for v in x.values()) else 1 if any(0.4 < v < 7 for v in x.values()) else 0)
+    df['toxicityrisk'] = df['toxicity_percentage'].apply(lambda x: 2 if any(v > 5.0 for v in x.values()) else 1 if any(3.5 < v < 5.0 for v in x.values()) else 0)
     df['toxicityeval'] = df['toxicityrisk'].apply(lambda x: 1 if x in [1,2] else 0)
     df['match'] = df[gtlabel] == df['toxicityeval']
     return df
