@@ -66,4 +66,15 @@ def predicttoxicity(df, texts_col, modelname='unbiased'):
       flatten_df = pd.json_normalize(rdf.to_dict(orient='records'))
       flatten_df.columns = flatten_df.columns.str.replace('Response.', '', regex=False)
     return flatten_df
-    
+
+def caltoxicity(df, texts_col, modelname='unbiased'):
+    import collections
+    from collections import Counter
+    detox_model = Detoxify(modelname)
+    df['toxicity_result'] = df[texts_col].apply(lambda t: detox_model.predict(t))
+    df['maxofthree'] = df['toxicity_result'].apply(lambda x: dict(sorted(Counter(x).most_common(3), key=lambda item: item[1], reverse=True)))
+    df['summationpercentage'] = df['maxofthree'].apply(lambda x: (sum(x.values()) * 100))
+    df['toxicityrisk'] = df['summationpercentage'].apply(lambda x: 2 if x>=50.00 else 1 if 35.00 <= x <=50.00 else 0 )
+    df['toxicityeval'] = df['toxicityrisk'].apply(lambda x: 1 if x in [1,2] else 0)
+    df['match'] = df['label'] == df['toxicityeval']
+    return df
