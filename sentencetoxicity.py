@@ -20,11 +20,11 @@ def sentencetoxicityvalidator(contextstr, modelname='unbiased'):
             detox_model = Detoxify(modelname)
             result = detox_model.predict(str(contextstr))
             sorted_result = dict(sorted(result.items(), key=lambda x: x[1], reverse=True))
-            maxoftwo = dict(Counter(sorted_result).most_common(3))        
+            maxofthree = dict(Counter(sorted_result).most_common(3))        
             summationpercenatage = (sum(maxoftwo.values()) * 100)
             toxicityrisk = 2 if summationpercenatage>=50.00 else 1 if 35.00 <= summationpercenatage <=50.00 else 0 
             result['question'] = contextstr
-            result['maxofthree'] = maxoftwo
+            result['maxofthree'] = maxofthree
             result['summationpercenatage'] = summationpercenatage
             result['toxicityrisk'] = toxicityrisk
             result['toxicityeval'] = 1 if toxicityrisk in [1,2] else 0
